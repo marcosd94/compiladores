@@ -78,16 +78,16 @@ void sigLex()
 		    t.pe=buscar("]");
 		    break;
 		}
-		else if (c=='(')
+		else if (c=='{')
 		{
 		    t.compLex=L_LLAVE;
-		    t.pe=buscar("(");
+		    t.pe=buscar("{");
 		    break;
 		}
-		else if (c==')')
+		else if (c=='}')
 		{
 		    t.compLex=R_LLAVE;
-		    t.pe=buscar(")");
+		    t.pe=buscar("}");
 		    break;
 		}
 		else if (c==',')
