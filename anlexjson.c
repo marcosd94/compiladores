@@ -1,25 +1,21 @@
 /*
- *	Analizador L�xico	
+ *	Analizador Léxico	
  *	Curso: Compiladores y Lenguajes de Bajo de Nivel
- *	Pr�ctica de Programaci�n Nro. 1
+ *	Práctica de Programación Nro. 1
  *	
  *	Descripcion:
- *	Implementa un analizador l�xico que reconoce n�meros, literales 
- *  en cadena y signos de puntuaci�n. para un lenguaje con sintaxis 
+ *	Implementa un analizador léxico que reconoce números, literales 
+ *  en cadena y signos de puntuación. para un lenguaje con sintaxis 
  * 	tipo JSON.
  *	
  */
 
-/*********** Inclusi�n de cabecera **************/
+/*********** Inclusión de cabecera **************/
 #include "anlexjson.h"
 
 
 /************* Variables globales **************/
 
-int consumir;			/* 1 indica al analizador lexico que debe devolver
-						el sgte componente lexico, 0 debe devolver el actual */
-
-char cad[5*TAMLEX];		// string utilizado para cargar mensajes de error
 token t;				// token global para recibir componentes del Analizador Lexico
 
 // variables para el analizador lexico
@@ -27,8 +23,6 @@ token t;				// token global para recibir componentes del Analizador Lexico
 FILE *archivo;			// Fuente pascal
 char buff[2*TAMBUFF];	// Buffer para lectura de archivo fuente
 char id[TAMLEX];		// Utilizado por el analizador lexico
-int delantero=-1;		// Utilizado por el analizador lexico
-int fin=0;				// Utilizado por el analizador lexico
 int numLinea=1;			// Numero de Linea
 
 /**************** Funciones **********************/
@@ -49,7 +43,6 @@ void sigLex()
 	int acepto=0;
 	int estado=0;
 	char msg[41];
-	entrada e;
 
 	while((c=fgetc(archivo))!=EOF)
 	{
@@ -115,7 +108,7 @@ void sigLex()
 			while(c!=EOF){
 				if(c == '"'){
 					t.compLex=STRING;
-		    			t.lexema="STRING";
+		    		t.lexema="STRING";
 					break;
 				}else{
 				   c=fgetc(archivo);
@@ -237,12 +230,7 @@ void sigLex()
 							c=0;
 						id[++i]='\0';
 						acepto=1;
-						if (t.pe->compLex==-1)
-						{
-							//strcpy(e.lexema,id);
-							//e.compLex=NUM;
-						}
-						t.compLex=NUM;
+						t.compLex=NUMBER;
 						t.lexema="NUMBER";
 						break;
 					case -1:
@@ -250,7 +238,6 @@ void sigLex()
 							error("No se esperaba el fin de archivo");
 						else
 							error(msg);
-						exit(1);
 					}
 				}
 			break;
@@ -300,9 +287,6 @@ void sigLex()
 int main(int argc,char* args[])
 {
 	// inicializar analizador lexico
-
-	initTabla();
-	initTablaSimbolos();
 	
 	if(argc > 1)
 	{

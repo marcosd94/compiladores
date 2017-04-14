@@ -8,7 +8,7 @@
 
 //Codigos
 #define STRING		256
-#define NUM		257
+#define NUMBER		257
 #define L_CORCHETE	258
 #define R_CORCHETE	259
 #define L_LLAVE		260
@@ -21,28 +21,13 @@
 // Fin Codigos
 #define TAMBUFF 	5
 #define TAMLEX 		50
-#define TAMHASH 	101
 
 /************* Estructuras ********************/
 
-typedef struct entrada{
-	//definir los campos de 1 entrada de la tabla de simbolos
-	int compLex;
-	char lexema[TAMLEX];	
-	struct entrada *tipoDato; // null puede representar variable no declarada	
-	// aqui irian mas atributos para funciones y procedimientos...
-	
-} entrada;
-
 typedef struct {
 	int compLex;
-	entrada *pe;
 	char *lexema;
 } token;
 
 /************* Prototipos ********************/
-void insertar(entrada e);
-entrada* buscar(const char *clave);
-void initTabla();
-void initTablaSimbolos();
 void sigLex();
