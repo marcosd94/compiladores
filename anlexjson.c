@@ -38,7 +38,7 @@ int numLinea=1;			// Numero de Linea
 
 void error(const char* mensaje)
 {
-	printf("Lin %d: Error Lexico. %s.",numLinea,mensaje);	
+	printf("Lin %d: Error Lexico. %s. ",numLinea,mensaje);	
 }
 
 
@@ -254,6 +254,36 @@ void sigLex()
 					}
 				}
 			break;
+		}
+		else if (isalpha(c)) {
+			i = 0;
+			do{
+				id[i] = c;
+				i++;
+				c = fgetc(archivo);
+			}while (isalpha(c));
+			id[i]='\0';
+			if (c!=EOF)
+				ungetc(c,archivo);
+			if(strcmp(id, "true") == 0 || strcmp(id, "TRUE") == 0){
+				t.compLex=PR_TRUE;
+				t.lexema="PR_TRUE";
+				break;
+			}
+			else if (strcmp(id, "false") == 0 || strcmp(id, "FALSE") == 0){
+				t.compLex=PR_FALSE;
+				t.lexema="PR_FALSE";
+				break;
+			}
+			else if(strcmp(id, "null") == 0 || strcmp(id, "NULL") == 0){
+				t.compLex=PR_NULL;
+				t.lexema="PR_NULL";
+				break;
+			}
+			else{
+				sprintf(msg,"No se esperaba '%s'",id);
+				error(msg);				
+			}
 		}
 		else {
 			sprintf(msg,"No se esperaba '%c'",c);
