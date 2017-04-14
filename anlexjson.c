@@ -38,7 +38,7 @@ int numLinea=1;			// Numero de Linea
 
 void error(const char* mensaje)
 {
-	printf("Lin %d: Error Lexico. %s.\n",numLinea,mensaje);	
+	printf("Lin %d: Error Lexico. %s.",numLinea,mensaje);	
 }
 
 
@@ -254,6 +254,10 @@ void sigLex()
 					}
 				}
 			break;
+		}
+		else {
+			sprintf(msg,"No se esperaba '%c'",c);
+			error(msg);
 		}
 	}
 	if (c==EOF)
