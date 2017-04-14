@@ -226,11 +226,11 @@ void sigLex()
 						if (t.pe->compLex==-1)
 						{
 							strcpy(e.lexema,id);
-							e.compLex=NUM;
+							e.compLex=NUMBER;
 							insertar(e);
 							t.pe=buscar(id);
 						}
-						t.compLex=NUM;
+						t.compLex=NUMBER;
 						break;
 					case -1:
 						if (c==EOF)
