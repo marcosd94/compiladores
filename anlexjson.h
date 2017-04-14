@@ -8,7 +8,7 @@
 
 //Codigos
 #define STRING		256
-#define NUMBER		257
+#define NUM		257
 #define L_CORCHETE	258
 #define R_CORCHETE	259
 #define L_LLAVE		260
@@ -37,6 +37,7 @@ typedef struct entrada{
 typedef struct {
 	int compLex;
 	entrada *pe;
+	char *lexema;
 } token;
 
 /************* Prototipos ********************/

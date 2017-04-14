@@ -11,7 +11,7 @@
  */
 
 /*********** Inclusión de cabecera **************/
-#include "anlex.h"
+#include "anlexjson.h"
 
 
 /************* Variables globales **************/
@@ -53,57 +53,69 @@ void sigLex()
 
 	while((c=fgetc(archivo))!=EOF)
 	{
-		if (c==' ' || c=='\t')
+		if (c==' ' || c=='\t'){
+
+			printf(" ");
 			continue;	//eliminar espacios en blanco
+		}
+		else if(c=='\t')
+		{
+			//incrementar el numero de linea
+			printf("\t");
+			continue;
+		}
 		else if(c=='\n')
 		{
 			//incrementar el numero de linea
+			printf("\n");
 			numLinea++;
 			continue;
-		}else if (c==':')
-        {
-            t.compLex=DOS_PUNTOS;
-            t.pe=buscar(":");
-            break;
-        }
+		}
+		else if (c==':')
+		{
+		    t.compLex=DOS_PUNTOS;
+		    t.lexema="DOS_PUNTOS";
+		    break;
+		}
+		else if (c=='{')
+		{
+		    t.compLex=L_LLAVE;
+		    t.lexema="L_LLAVE";
+		    break;
+		}
+		else if (c=='}')
+		{
+		    t.compLex=R_LLAVE;
+		    t.lexema="R_LLAVE";
+		    break;
+		}
 		else if (c=='[')
 		{
 		    t.compLex=L_CORCHETE;
-		    t.pe=buscar("[");
+		    t.lexema="L_CORCHETE";
 		    break;
 		}
 		else if (c==']')
 		{
 		    t.compLex=R_CORCHETE;
-		    t.pe=buscar("]");
-		    break;
-		}
-		else if (c=='(')
-		{
-		    t.compLex=L_LLAVE;
-		    t.pe=buscar("(");
-		    break;
-		}
-		else if (c==')')
-		{
-		    t.compLex=R_LLAVE;
-		    t.pe=buscar(")");
+		    t.lexema="R_CORCHETE";
 		    break;
 		}
 		else if (c==',')
 		{
 		    t.compLex=COMA;
-		    t.pe=buscar(",");
+		    t.lexema="COMA";
 		    break;
 		}
 		else if (c == '"')
 		{
+
 			//es un STRING /*VERIFICA QUE SE INGRESA UN STRING VALIDO*/
 			c=fgetc(archivo);
 			while(c!=EOF){
 				if(c == '"'){
 					t.compLex=STRING;
-					t.pe=buscar("STRING"); //??????????
+		    			t.lexema="STRING";
 					break;
 				}else{
 				   c=fgetc(archivo);
@@ -111,10 +123,13 @@ void sigLex()
 			}
 			if (c==EOF)
 				error("Se llego al fin sin cerrar el String");
+			
+			break;
 		}
 		else if (isdigit(c))
 		{
 			//es un numero
+
 			i=0;
 			estado=0;
 			acepto=0;
@@ -222,15 +237,13 @@ void sigLex()
 							c=0;
 						id[++i]='\0';
 						acepto=1;
-						t.pe=buscar(id);
 						if (t.pe->compLex==-1)
 						{
-							strcpy(e.lexema,id);
-							e.compLex=NUMBER;
-							insertar(e);
-							t.pe=buscar(id);
+							//strcpy(e.lexema,id);
+							//e.compLex=NUM;
 						}
-						t.compLex=NUMBER;
+						t.compLex=NUM;
+						t.lexema="NUMBER";
 						break;
 					case -1:
 						if (c==EOF)
@@ -246,9 +259,7 @@ void sigLex()
 	if (c==EOF)
 	{
 		t.compLex=EOF;
-		// strcpy(e.lexema,"EOF");
-		sprintf(e.lexema,"EOF");
-		t.pe=&e;
+		t.lexema="EOF";
 	}
 }
 
@@ -266,15 +277,17 @@ int main(int argc,char* args[])
 			printf("Archivo no encontrado.\n");
 			exit(1);
 		}
-		while (t.compLex!=EOF){
+		while (t.lexema!="EOF"){
 			sigLex();
-			printf("Lin %d: %s -> %d\n",numLinea,t.pe->lexema,t.compLex);
+			printf("%s ",t.lexema); 
 		}
 		fclose(archivo);
 	}else{
 		printf("Debe pasar como parametro el path al archivo fuente.\n");
 		exit(1);
 	}
+
+			printf("\n");
 
 	return 0;
 }
