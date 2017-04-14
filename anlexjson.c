@@ -1,16 +1,16 @@
 /*
- *	Analizador Léxico	
+ *	Analizador Lï¿½xico	
  *	Curso: Compiladores y Lenguajes de Bajo de Nivel
- *	Práctica de Programación Nro. 1
+ *	Prï¿½ctica de Programaciï¿½n Nro. 1
  *	
  *	Descripcion:
- *	Implementa un analizador léxico que reconoce números, literales 
- *  en cadena y signos de puntuación. para un lenguaje con sintaxis 
+ *	Implementa un analizador lï¿½xico que reconoce nï¿½meros, literales 
+ *  en cadena y signos de puntuaciï¿½n. para un lenguaje con sintaxis 
  * 	tipo JSON.
  *	
  */
 
-/*********** Inclusión de cabecera **************/
+/*********** Inclusiï¿½n de cabecera **************/
 #include "anlexjson.h"
 
 
