@@ -26,7 +26,7 @@
 
 typedef struct {
 	int compLex;
-	char *lexema;
+	char *comp;
 } token;
 
 /************* Prototipos ********************/

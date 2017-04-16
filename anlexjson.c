@@ -67,37 +67,37 @@ void sigLex()
 		else if (c==':')
 		{
 		    t.compLex=DOS_PUNTOS;
-		    t.lexema="DOS_PUNTOS";
+		    t.comp="DOS_PUNTOS";
 		    break;
 		}
 		else if (c=='{')
 		{
 		    t.compLex=L_LLAVE;
-		    t.lexema="L_LLAVE";
+		    t.comp="L_LLAVE";
 		    break;
 		}
 		else if (c=='}')
 		{
 		    t.compLex=R_LLAVE;
-		    t.lexema="R_LLAVE";
+		    t.comp="R_LLAVE";
 		    break;
 		}
 		else if (c=='[')
 		{
 		    t.compLex=L_CORCHETE;
-		    t.lexema="L_CORCHETE";
+		    t.comp="L_CORCHETE";
 		    break;
 		}
 		else if (c==']')
 		{
 		    t.compLex=R_CORCHETE;
-		    t.lexema="R_CORCHETE";
+		    t.comp="R_CORCHETE";
 		    break;
 		}
 		else if (c==',')
 		{
 		    t.compLex=COMA;
-		    t.lexema="COMA";
+		    t.comp="COMA";
 		    break;
 		}
 		else if (c == '"')
@@ -108,7 +108,7 @@ void sigLex()
 			while(c!=EOF){
 				if(c == '"'){
 					t.compLex=STRING;
-		    		t.lexema="STRING";
+		    		t.comp="STRING";
 					break;
 				}else{
 				   c=fgetc(archivo);
@@ -231,7 +231,7 @@ void sigLex()
 						id[++i]='\0';
 						acepto=1;
 						t.compLex=NUMBER;
-						t.lexema="NUMBER";
+						t.comp="NUMBER";
 						break;
 					case -1:
 						if (c==EOF)
@@ -254,17 +254,17 @@ void sigLex()
 				ungetc(c,archivo);
 			if(strcmp(id, "true") == 0 || strcmp(id, "TRUE") == 0){
 				t.compLex=PR_TRUE;
-				t.lexema="PR_TRUE";
+				t.comp="PR_TRUE";
 				break;
 			}
 			else if (strcmp(id, "false") == 0 || strcmp(id, "FALSE") == 0){
 				t.compLex=PR_FALSE;
-				t.lexema="PR_FALSE";
+				t.comp="PR_FALSE";
 				break;
 			}
 			else if(strcmp(id, "null") == 0 || strcmp(id, "NULL") == 0){
 				t.compLex=PR_NULL;
-				t.lexema="PR_NULL";
+				t.comp="PR_NULL";
 				break;
 			}
 			else{
@@ -280,7 +280,7 @@ void sigLex()
 	if (c==EOF)
 	{
 		t.compLex=EOF;
-		t.lexema="EOF";
+		t.comp="EOF";
 	}
 }
 
@@ -295,9 +295,9 @@ int main(int argc,char* args[])
 			printf("Archivo no encontrado.\n");
 			exit(1);
 		}
-		while (t.lexema!="EOF"){
+		while (t.comp!="EOF"){
 			sigLex();
-			printf("%s ",t.lexema); 
+			printf("%s ",t.comp); 
 		}
 		fclose(archivo);
 	}else{
