@@ -62,6 +62,7 @@ void arrayTrad(){
 	if(t.compLex == L_CORCHETE){   
         match(L_CORCHETE);
         arrTrad();
+		print_tab();
     }	
 }
 
@@ -77,6 +78,7 @@ void arrTrad(){
         print_tab();
         printf("</item>\n");
 		fprintf(archivoXML,"</item>\n"); 
+		tabulacion-=4; 
     }
     else if(t.compLex == R_CORCHETE){
         tabulacion-=4;
@@ -211,7 +213,7 @@ int main (int argc,char* args[]){
 	    
         }
 	else{	
-		fprintf(archivoXML,"\n Error sintacticamente");
+		fprintf(archivoXML,"\nEl fuente tiene errores sintacticos.\n");
 		
 	}
 	fclose(archivoXML);
