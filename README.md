@@ -8,6 +8,6 @@ Compiladores 2017 FP-UNA
 -Laura Villalba lavi.luari@gmail.com
 
 ####Para compilar:
-1. cd C/
-2. gcc anlex.c tablaSimbolos.c -o anlex
+1. gcc traductor.c -o json
+2. ./json fuente.txt
 
