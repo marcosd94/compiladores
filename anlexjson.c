@@ -48,19 +48,16 @@ void sigLex()
 	{
 		if (c==' ' || c=='\t'){
 
-			printf(" ");
 			continue;	//eliminar espacios en blanco
 		}
 		else if(c=='\t')
 		{
 			//incrementar el numero de linea
-			printf("\t");
 			continue;
 		}
 		else if(c=='\n')
 		{
 			//incrementar el numero de linea
-			printf("\n");
 			numLinea++;
 			continue;
 		}
@@ -277,14 +274,14 @@ void sigLex()
 			error(msg);
 		}
 	}
-	if (c==EOF)
+        if (c==EOF)
 	{
 		t.compLex=EOF;
 		t.comp="EOF";
 	}
 }
 
-int main(int argc,char* args[])
+/*int main(int argc,char* args[])
 {
 	// inicializar analizador lexico
 	
@@ -308,4 +305,4 @@ int main(int argc,char* args[])
 			printf("\n");
 
 	return 0;
-}
+}*/
