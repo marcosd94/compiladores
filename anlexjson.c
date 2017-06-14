@@ -65,53 +65,70 @@ void sigLex()
         {
             t.compLex=DOS_PUNTOS;
             t.comp="DOS_PUNTOS";
+			t.lexema=":";
             break;
         }
         else if (c=='{')
         {
             t.compLex=L_LLAVE;
             t.comp="L_LLAVE";
+			t.lexema="{";
             break;
         }
         else if (c=='}')
         {
             t.compLex=R_LLAVE;
             t.comp="R_LLAVE";
+			t.lexema="}";
             break;
         }
         else if (c=='[')
         {
             t.compLex=L_CORCHETE;
             t.comp="L_CORCHETE";
+			t.lexema="[";
             break;
         }
         else if (c==']')
         {
             t.compLex=R_CORCHETE;
             t.comp="R_CORCHETE";
+			t.lexema="]";
             break;
         }
         else if (c==',')
         {
             t.compLex=COMA;
             t.comp="COMA";
+			t.lexema=",";
             break;
         }
         else if (c == '"')
         {
             //es un STRING /*VERIFICA QUE SE INGRESA UN STRING VALIDO*/
             c=fgetc(archivo);
+			i = 0;
+			id[i]= c; 
             while(c!=EOF){
                 if(c == '"'){
-                        t.compLex=STRING;
-                t.comp="STRING";
-                        break;
-                }else{
-                   c=fgetc(archivo);
+					id[i] = '\0';
+                    t.compLex=STRING;
+					t.comp="STRING";
+					t.lexema = id;
+                    break;
+                }else if(i>=TAMLEX){
+					ungetc(c, archivo);
+				}
+				else{
+                    c=fgetc(archivo);
+					id[++i] = c;
                 }
             }
             if (c==EOF)
                 error("Se llego al fin sin cerrar el String");
+			else if(i>=TAMLEX){
+				error("Longitud de Identificador excede tamaño de buffer");
+			}
             break;
         }
         else if (isdigit(c))
@@ -223,10 +240,11 @@ void sigLex()
                             ungetc(c,archivo);
                         else
                             c=0;
-                        id[++i]='\0';
-                        acepto=1;
-                        t.compLex=NUMBER;
-                        t.comp="NUMBER";
+							id[++i]='\0';
+							acepto=1;
+							t.compLex=NUMBER;
+							t.comp="NUMBER";
+							t.lexema = id;
                         break;
                     case -1:
                         if (c==EOF)
@@ -250,16 +268,19 @@ void sigLex()
             if(strcmp(id, "true") == 0 || strcmp(id, "TRUE") == 0){
                 t.compLex=PR_TRUE;
                 t.comp="PR_TRUE";
+				t.lexema = "true";
                 break;
             }
             else if (strcmp(id, "false") == 0 || strcmp(id, "FALSE") == 0){
                 t.compLex=PR_FALSE;
                 t.comp="PR_FALSE";
+				t.lexema = "false";
                 break;
             }
             else if(strcmp(id, "null") == 0 || strcmp(id, "NULL") == 0){
                 t.compLex=PR_NULL;
                 t.comp="PR_NULL";
+				t.lexema = "null";
                 break;
             }
             else{
